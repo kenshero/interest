@@ -1,0 +1,188 @@
+<!doctype html>
+<html ng-app="buyHome">
+  <head>
+    <meta charset="UTF-8">
+    <script src="js/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href="css/ripples.min.css" rel="stylesheet">
+    <link href="css/material-wfont.min.css" rel="stylesheet">
+
+  </head>
+  
+  <body ng-controller="BuyhomeController">
+    
+    <div class="container">
+      <div class="row">
+                    <div class="col-lg-12">
+                        <div class="well bs-component">
+                            <form class="form-horizontal">
+                                <fieldset>
+                                <h1>{{resMoney}}</h1>
+                                    <div class="form-group">
+                                        <label for="inputMoney" class="col-lg-2 control-label">จำนวนเงินต้น :</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" id="inputMoney" 
+                                            ng-model="inputMoneyStart">
+                                        </div>
+                                        <label for="inputMoney" class="col-lg-1 control-label">บาท
+                                        </label>
+                                    </div>
+                                    
+
+                                    <div class="form-group">
+                                        <label for="inputMonth" class="col-lg-2 control-label">จำนวนเดือนที่ชำระ :</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" id="inputMonth" ng-model="inputMonthVal" ng-blur="MonthVal(inputMonthVal)">
+                                        </div>
+                                    </div>
+
+              <!-- ///////////////////////////////////////////////////////////////////////////////// -->                  
+               
+                            
+                            
+                                 <div ng-repeat="Pay in Pays">
+                                    เดือน
+
+                                    <select ng-show="$first" id="select" ng-model="Pay.start">
+                                        <option>1</option>
+                                    </select>
+
+                                    <select ng-show="! $first" id="select" ng-model="Pay.start"
+                                    ng-options="test.number for test in tests" >
+                                    </select>
+
+                                    ถึง 
+                                    <select  id="select" ng-model="Pay.end"
+                                     ng-options="test.number for test in tests" onchange="">
+                                    </select>
+
+                                    จำนวนเงิน
+                                    <input type="text"  ng-model="Pay.interestPay">
+                                    
+
+                                    <button ng-show="$last" ng-click="addPay($index+1)">+</button> 
+
+                                 </div>
+                   
+
+              <!-- ///////////////////////////////////////////////////////////////////////////////// -->
+                            
+                           <!--  <div class="form-group">
+                                <label for="select" class="col-lg-3 control-label">เริ่มงวดที่</label>
+                                <label for="inputPay" class="col-lg-3 control-label">ถึง</label>
+                                <label for="inputPay" class="col-lg-3 control-label">อัตราดอกเบี้ย</label>
+                            </div>
+                                    <div class="form-group" ng-repeat="interest in interests">
+
+                                        <div class="form-group">
+                                            <label for="select" class="col-lg-2 control-label">เดือน</label>
+                                            
+
+                                            <div class="col-lg-1">
+                                                <select class="form-control" id="select" ng-model="interest.MonthAinterest">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div>
+            
+                                            <label for="select" class="col-lg-2 control-label">เดือน</label>
+                                            <div class="col-lg-1">
+                                                <select class="form-control" id="select" ng-model="interest.MonthBinterest">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                           </div>
+            
+                                            <label for="inputPay" class="col-lg-2 control-label">จำนวนดอกเบี้ย :</label>
+
+                                            <div class="col-lg-2">
+                                                <input type="text" class="form-control" id="inputPay" ng-model="interest.inputInterest">
+                                            </div>
+
+                                            <button ng-show="$last" ng-click="addInterests()">+</button>
+
+                                        </div>
+                                    </div>  -->
+
+
+                                    <div class="form-group">
+                                        <div class="col-lg-10 col-lg-offset-2">
+                                            <button type="submit" class="btn btn-primary" ng-click="log()">คำนวน</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+              </div>  
+
+             
+             <p>{{Pays}}</p>
+             <p>{{Pays[1]}}</p>
+             <p>{{Pays[2]}}</p>
+             <p>{{Pays[3]}}</p>
+
+              <div class="container"> 
+                <div class="row">
+                  <div class="col-lg-12">
+                     <div class="well bs-component">
+                       <form class="form-horizontal">
+                         <fieldset>
+                            <table class="table table-striped table-hover ">
+
+                                <thead>
+                                    <tr>
+                                        <th>งวด</th>
+                                        <th>กำหนดวันที่ชำระ</th>
+                                        <th>เงินต้นคงเหลือ</th>
+                                        <th>เงินต้น+ดอกเบี้ย</th>
+                                        <th>ดอกเบี้ย</th>
+                                        <th>ค่างวด</th>
+                                        <th>เป็นเงินต้น</th>
+                                        <th>เป็นดอกเบี้ย</th>
+                                        <th>คงเหลือ</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    <tr ng-repeat="table in Tables">
+                                        <td>{{$index+1}}</td>
+                                        <td>N/A</td>
+                                        <td>{{table.moneyFirst}}</td>
+                                        <td>N/A</td>
+                                        <td>N/A</td>
+                                        <td>{{table.moneyPay}}</td>
+                                        <td>{{table.moneyPay}}</td>
+                                        <td>N/A</td>
+                                        <td>{{table.moneyResult}}</td>
+
+                                    </tr>
+                                                                    
+                                </tbody>
+
+
+                            </table>
+                        </fieldset>
+                      </form>
+                    </div>   
+                  </div>  
+                </div>
+              </div>
+                
+
+      <script src="js/app.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/ripples.min.js"></script>
+      <script src="js/material.min.js"></script>
+
+  </body>
+
+</html>

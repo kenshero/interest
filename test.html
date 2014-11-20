@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="buyHome">
+  <head>
+    <meta charset="UTF-8">
+    <script src="js/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href="css/ripples.min.css" rel="stylesheet">
+    <link href="css/material-wfont.min.css" rel="stylesheet">
+
+  </head>
+  
+    <body ng-controller="BuyhomeController">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well bs-component">
+                     <form class="form-horizontal">
+
+                     <div ng-repeat="interest in interests">
+
+                        <select ng-model="interest.start">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+
+                        <select ng-model="interest.end">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+
+                        <input type="text" ng-model="interest.interestRate">
+                        
+
+                        <button ng-show="$last" ng-click="addInterests()">+</button> 
+
+                         </div>
+                    </form>
+                    <button ng-click="log()">click</button>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+                
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ripples.min.js"></script>
+    <script src="js/material.min.js"></script>
+    <script src="js/app.js"></script>
+
+    </body>
+
+</html>
